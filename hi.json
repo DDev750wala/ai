@@ -1,0 +1,1033 @@
+{
+    "water_bfs_1": {
+        "prefix": "water_bfs_1",
+        "body": [
+            "from collections import deque",
+            "",
+            "def gcd(a, b):",
+            "    while b:",
+            "        a, b = b, a % b",
+            "    return a"
+        ],
+        "description": "Imports and defines the gcd function"
+    },
+    "water_bfs_2": {
+        "prefix": "water_bfs_2",
+        "body": [
+            "",
+            "def is_solvable(n, m, t):",
+            "    return t % gcd(n, m) == 0 and t <= max(n, m)"
+        ],
+        "description": "Defines is_solvable function"
+    },
+    "water_bfs_3": {
+        "prefix": "water_bfs_3",
+        "body": [
+            "",
+            "def water_jug_solver(n, m, t):",
+            "    if not is_solvable(n, m, t):",
+            "        return \"No solution\"",
+            "",
+            "    visited = set()",
+            "    queue = deque([(0, 0)])",
+            "    visited.add((0, 0))",
+            "",
+            "    parent = { (0, 0): None }"
+        ],
+        "description": "Defines the initial state for water_jug_solver"
+    },
+    "water_bfs_4": {
+        "prefix": "water_bfs_4",
+        "body": [
+            "    while queue:",
+            "        jug1, jug2 = queue.popleft()",
+            "",
+            "        if jug1 == t or jug2 == t:",
+            "            path = []",
+            "            state = (jug1, jug2)",
+            "            while state is not None:",
+            "                path.append(state)",
+            "                state = parent[state]",
+            "            path.reverse()",
+            "            return path"
+        ],
+        "description": "Implements BFS loop to check and record solution"
+    },
+    "water_bfs_5": {
+        "prefix": "water_bfs_5",
+        "body": [
+            "        next_states = [",
+            "            (n, jug2),  # Fill jug1",
+            "            (jug1, m),  # Fill jug2",
+            "            (0, jug2),  # Empty jug1",
+            "            (jug1, 0),  # Empty jug2",
+            "            (jug1 - min(jug1, m - jug2), jug2 + min(jug1, m - jug2)),  # Pour jug1 -> jug2",
+            "            (jug1 + min(jug2, n - jug1), jug2 - min(jug2, n - jug1))   # Pour jug2 -> jug1",
+            "        ]",
+            "",
+            "        for state in next_states:",
+            "            if state not in visited:",
+            "                visited.add(state)",
+            "                queue.append(state)",
+            "                parent[state] = (jug1, jug2)",
+            "",
+            "    return \"No solution\""
+        ],
+        "description": "Defines the next possible states and checks for solution"
+    },
+    "water_bfs_6": {
+        "prefix": "water_bfs_6",
+        "body": [
+            "n = int(input(\"Enter the capacity of jug1: \"))",
+            "m = int(input(\"Enter the capacity of jug2: \"))",
+            "t = int(input(\"Enter the target amount: \"))",
+            "",
+            "solution = water_jug_solver(n, m, t)",
+            "",
+            "if solution != \"No solution\":",
+            "    print(\"Steps to measure exactly\", t, \"liters:\")",
+            "    for step in solution:",
+            "        print(step)",
+            "else:",
+            "    print(\"No solution exists to measure exactly\", t, \"liters with the given jugs.\")"
+        ],
+        "description": "Handles input and prints the solution steps"
+    },
+    "water_dfs_1": {
+        "prefix": "water_dfs_1",
+        "body": [
+            "def is_solvable(n, m, t):",
+            "    return t % gcd(n, m) == 0 and t <= max(n, m)"
+        ],
+        "description": "Defines is_solvable function"
+    },
+    "water_dfs_2": {
+        "prefix": "water_dfs_2",
+        "body": [
+            "",
+            "def gcd(a, b):",
+            "    while b != 0:",
+            "        a, b = b, a % b",
+            "    return a"
+        ],
+        "description": "Defines gcd function"
+    },
+    "water_dfs_3": {
+        "prefix": "water_dfs_3",
+        "body": [
+            "",
+            "def water_jug_solver(n, m, t):",
+            "    if not is_solvable(n, m, t):",
+            "        return \"No solution\"",
+            "",
+            "    stack = [(0, 0)]",
+            "    visited = set()",
+            "    visited.add((0, 0))",
+            "",
+            "    path = []"
+        ],
+        "description": "Defines water_jug_solver initial setup with stack and visited set"
+    },
+    "water_dfs_4": {
+        "prefix": "water_dfs_4",
+        "body": [
+            "    while stack:",
+            "        jug1, jug2 = stack.pop()",
+            "        path.append((jug1, jug2))",
+            "",
+            "        if jug1 == t or jug2 == t:",
+            "            return path"
+        ],
+        "description": "DFS loop to check if the target is reached and record the path"
+    },
+    "water_dfs_5": {
+        "prefix": "water_dfs_5",
+        "body": [
+            "        next_states = [",
+            "            (n, jug2),  # Fill jug1",
+            "            (jug1, m),  # Fill jug2",
+            "            (0, jug2),  # Empty jug1",
+            "            (jug1, 0),  # Empty jug2",
+            "            (jug1 - min(jug1, m - jug2), jug2 + min(jug1, m - jug2)),  # Pour jug1 -> jug2",
+            "            (jug1 + min(jug2, n - jug1), jug2 - min(jug2, n - jug1))   # Pour jug2 -> jug1",
+            "        ]",
+            "",
+            "        for state in next_states:",
+            "            if state not in visited:",
+            "                visited.add(state)",
+            "                stack.append(state)",
+            "",
+            "    return \"No solution\""
+        ],
+        "description": "Generate next possible states and add them to the stack"
+    },
+    "water_dfs_6": {
+        "prefix": "water_dfs_6",
+        "body": [
+            "n = int(input(\"Enter the capacity of jug1: \"))",
+            "m = int(input(\"Enter the capacity of jug2: \"))",
+            "t = int(input(\"Enter the target amount: \"))",
+            "",
+            "solution = water_jug_solver(n, m, t)",
+            "",
+            "if solution != \"No solution\":",
+            "    print(\"Steps to measure exactly\", t, \"liters:\")",
+            "    for step in solution:",
+            "        print(step)",
+            "else:",
+            "    print(\"No solution exists to measure exactly\", t, \"liters with the given jugs.\")"
+        ],
+        "description": "Handle input and print the solution"
+    },
+    "bfs_8_puzzle_1": {
+        "prefix": "bfs_8_puzzle_1",
+        "body": [
+            "from collections import deque",
+            "",
+            "def bfs(start_state, goal_state):",
+            "    def get_neighbors(state):",
+            "        neighbors = []",
+            "        zero_index = state.index(0)",
+            "        row, col = divmod(zero_index, 3)"
+        ],
+        "description": "Imports and initializes the BFS function with neighbor lookup"
+    },
+    "bfs_8_puzzle_2": {
+        "prefix": "bfs_8_puzzle_2",
+        "body": [
+            "        moves = {",
+            "            'up': (row - 1, col),",
+            "            'down': (row + 1, col),",
+            "            'left': (row, col - 1),",
+            "            'right': (row, col + 1)",
+            "        }",
+            "",
+            "        for move, (new_row, new_col) in moves.items():",
+            "            if 0 <= new_row < 3 and 0 <= new_col < 3:",
+            "                new_zero_index = new_row * 3 + new_col",
+            "                new_state = list(state)",
+            "                new_state[zero_index], new_state[new_zero_index] = new_state[new_zero_index], new_state[zero_index]",
+            "                neighbors.append((tuple(new_state), move))",
+            "",
+            "        return neighbors"
+        ],
+        "description": "Defines possible moves and generates new states"
+    },
+    "bfs_8_puzzle_3": {
+        "prefix": "bfs_8_puzzle_3",
+        "body": [
+            "    def print_path(path):",
+            "        for step in path:",
+            "            state, move = step",
+            "            print_puzzle(state)",
+            "            print()",
+            "            print(f\"Move: {move}\")",
+            "            print()"
+        ],
+        "description": "Prints the solution path step-by-step"
+    },
+    "bfs_8_puzzle_4": {
+        "prefix": "bfs_8_puzzle_4",
+        "body": [
+            "    def print_puzzle(state):",
+            "        for i in range(0, 9, 3):",
+            "            print(state[i:i+3])",
+            "",
+            "    queue = deque([(start_state, [])])",
+            "    visited = set()",
+            "    visited.add(start_state)"
+        ],
+        "description": "Defines puzzle print method and initializes the BFS queue"
+    },
+    "bfs_8_puzzle_5": {
+        "prefix": "bfs_8_puzzle_5",
+        "body": [
+            "    while queue:",
+            "        current_state, path = queue.popleft()",
+            "",
+            "        if current_state == goal_state:",
+            "            print(\"Goal state reached!\")",
+            "            print()",
+            "            print_path(path + [(current_state, \"Goal\")])",
+            "            return path + [(current_state, \"Goal\")]"
+        ],
+        "description": "Processes each state and checks if the goal is reached"
+    },
+    "bfs_8_puzzle_6": {
+        "prefix": "bfs_8_puzzle_6",
+        "body": [
+            "        for neighbor, move in get_neighbors(current_state):",
+            "            if neighbor not in visited:",
+            "                visited.add(neighbor)",
+            "                queue.append((neighbor, path + [(current_state, move)]))",
+            "",
+            "    print(\"No solution found.\")",
+            "    return None"
+        ],
+        "description": "Explores neighbors and adds valid states to the queue"
+    },
+    "bfs_8_puzzle_7": {
+        "prefix": "bfs_8_puzzle_7",
+        "body": [
+            "start_state = (1, 2, 3, 0, 4, 6, 9, 7, 8)",
+            "goal_state = (1, 2, 3, 4, 7, 6, 9, 0, 8)",
+            "",
+            "solution_path = bfs(start_state, goal_state)"
+        ],
+        "description": "Defines the start and goal states and runs the BFS algorithm"
+    },
+    "dfs_8_puzzle_1": {
+        "prefix": "dfs_8_puzzle_1",
+        "body": [
+            "from collections import deque",
+            "",
+            "def dfs_limited(start_state, goal_state, max_depth):",
+            "    def get_neighbors(state):",
+            "        neighbors = []",
+            "        zero_index = state.index(0)  ",
+            "        row, col = divmod(zero_index, 3)"
+        ],
+        "description": "Imports and initializes the limited-depth DFS function with neighbor lookup"
+    },
+    "dfs_8_puzzle_2": {
+        "prefix": "dfs_8_puzzle_2",
+        "body": [
+            "        moves = {",
+            "            'up': (row - 1, col),",
+            "            'down': (row + 1, col),",
+            "            'left': (row, col - 1),",
+            "            'right': (row, col + 1)",
+            "        }",
+            "",
+            "        for move, (new_row, new_col) in moves.items():",
+            "            if 0 <= new_row < 3 and 0 <= new_col < 3:",
+            "                new_zero_index = new_row * 3 + new_col",
+            "                new_state = list(state)",
+            "                new_state[zero_index], new_state[new_zero_index] = new_state[new_zero_index], new_state[zero_index]",
+            "                neighbors.append((tuple(new_state), move))",
+            "",
+            "        return neighbors"
+        ],
+        "description": "Defines possible moves and generates new states"
+    },
+    "dfs_8_puzzle_3": {
+        "prefix": "dfs_8_puzzle_3",
+        "body": [
+            "    def print_path(path):",
+            "        for step in path:",
+            "            state, move = step",
+            "            print(f\"Move: {move}\")",
+            "            print_puzzle(state)",
+            "            print()"
+        ],
+        "description": "Prints the solution path step-by-step"
+    },
+    "dfs_8_puzzle_4": {
+        "prefix": "dfs_8_puzzle_4",
+        "body": [
+            "    def print_puzzle(state):",
+            "        for i in range(0, 9, 3):",
+            "            print(state[i:i+3])",
+            "",
+            "    stack = [(start_state, [], 0)]  ",
+            "    visited = set() ",
+            "    visited.add(start_state)"
+        ],
+        "description": "Defines puzzle print method and initializes the DFS stack"
+    },
+    "dfs_8_puzzle_5": {
+        "prefix": "dfs_8_puzzle_5",
+        "body": [
+            "    while stack:",
+            "        current_state, path, depth = stack.pop()",
+            "",
+            "        if current_state == goal_state:",
+            "            print(f\"Goal state reached at depth {depth}\")",
+            "            print_path(path + [(current_state, \"Goal\")])",
+            "            return path + [(current_state, \"Goal\")]"
+        ],
+        "description": "Processes each state and checks if the goal is reached"
+    },
+    "dfs_8_puzzle_6": {
+        "prefix": "dfs_8_puzzle_6",
+        "body": [
+            "        if depth < max_depth:",
+            "            for neighbor, move in get_neighbors(current_state):",
+            "                if neighbor not in visited:",
+            "                    visited.add(neighbor)",
+            "                    stack.append((neighbor, path + [(current_state, move)], depth + 1))",
+            "",
+            "    print(f\"No solution found within depth limit {max_depth}.\")",
+            "    return None"
+        ],
+        "description": "Explores neighbors and adds valid states to the stack"
+    },
+    "dfs_8_puzzle_7": {
+        "prefix": "dfs_8_puzzle_7",
+        "body": [
+            "start_state = (1, 2, 3, 0, 4, 5, 6, 7, 8)",
+            "goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 0)",
+            "",
+            "max_depth = 20",
+            "",
+            "solution_path = dfs_limited(start_state, goal_state, max_depth)"
+        ],
+        "description": "Defines the start and goal states and runs the limited-depth DFS algorithm"
+    },
+    "a_star_8_puzzle_1": {
+        "prefix": "a_star_8_puzzle_1",
+        "body": [
+            "import heapq",
+            "",
+            "def misplaced_tiles(state, goal_state):",
+            "    return sum(s != g and s != 0 for s, g in zip(state, goal_state))",
+            "",
+            "def manhattan_distance(state, goal_state):",
+            "    distance = 0"
+        ],
+        "description": "Imports necessary libraries and defines heuristic functions"
+    },
+    "a_star_8_puzzle_2": {
+        "prefix": "a_star_8_puzzle_2",
+        "body": [
+            "    for i in range(1, 9):",
+            "        current_index = state.index(i)",
+            "        goal_index = goal_state.index(i)",
+            "        current_row, current_col = divmod(current_index, 3)",
+            "        goal_row, goal_col = divmod(goal_index, 3)",
+            "        distance += abs(current_row - goal_row) + abs(current_col - goal_col)",
+            "    return distance",
+            "",
+            "def get_neighbors(state):",
+            "    neighbors = []",
+            "    zero_index = state.index(0)"
+        ],
+        "description": "Calculates Manhattan distance and defines function to get neighboring states"
+    },
+    "a_star_8_puzzle_3": {
+        "prefix": "a_star_8_puzzle_3",
+        "body": [
+            "    row, col = divmod(zero_index, 3)",
+            "    moves = {",
+            "        'up': (row - 1, col),",
+            "        'down': (row + 1, col),",
+            "        'left': (row, col - 1),",
+            "        'right': (row, col + 1)",
+            "    }",
+            "",
+            "    for move, (new_row, new_col) in moves.items():",
+            "        if 0 <= new_row < 3 and 0 <= new_col < 3:",
+            "            new_zero_index = new_row * 3 + new_col",
+            "            new_state = list(state)"
+        ],
+        "description": "Defines valid moves for the zero tile and generates new neighboring states"
+    },
+    "a_star_8_puzzle_4": {
+        "prefix": "a_star_8_puzzle_4",
+        "body": [
+            "            new_state[zero_index], new_state[new_zero_index] = new_state[new_zero_index], new_state[zero_index]",
+            "            neighbors.append((tuple(new_state), move))",
+            "",
+            "    return neighbors",
+            "",
+            "def a_star(start_state, goal_state, heuristic):",
+            "    pq = []",
+            "    heapq.heappush(pq, (0, start_state, [], 0))"
+        ],
+        "description": "Generates neighbors for the current state and defines the A* function"
+    },
+    "a_star_8_puzzle_5": {
+        "prefix": "a_star_8_puzzle_5",
+        "body": [
+            "    visited = set()",
+            "    visited.add(start_state)",
+            "",
+            "    while pq:",
+            "        f, current_state, path, g = heapq.heappop(pq)",
+            "",
+            "        if current_state == goal_state:",
+            "            return path + [(current_state, \"Goal\")]"
+        ],
+        "description": "Initializes the A* search process and checks for goal state"
+    },
+    "a_star_8_puzzle_6": {
+        "prefix": "a_star_8_puzzle_6",
+        "body": [
+            "        for neighbor, move in get_neighbors(current_state):",
+            "            if neighbor not in visited:",
+            "                visited.add(neighbor)",
+            "                new_path = path + [(current_state, move)]",
+            "",
+            "                new_g = g + 1",
+            "",
+            "                h = heuristic(neighbor, goal_state)",
+            "",
+            "                f = new_g + h",
+            "                heapq.heappush(pq, (f, neighbor, new_path, new_g))"
+        ],
+        "description": "Explores neighbors, computes costs, and updates priority queue"
+    },
+    "a_star_8_puzzle_7": {
+        "prefix": "a_star_8_puzzle_7",
+        "body": [
+            "    return None",
+            "",
+            "def print_puzzle(state):",
+            "    for i in range(0, 9, 3):",
+            "        print(state[i:i+3])",
+            "",
+            "def print_solution(path):",
+            "    for step in path:"
+        ],
+        "description": "Finalizes A* function, defines methods to print the puzzle and the solution"
+    },
+    "a_star_8_puzzle_8": {
+        "prefix": "a_star_8_puzzle_8",
+        "body": [
+            "        state, move = step",
+            "        print(f\"Move: {move}\")",
+            "        print_puzzle(state)",
+            "        print()",
+            "",
+            "start_state = (1, 2, 3, 0, 4, 5, 6, 7, 8)",
+            "goal_state = (1, 2, 3, 4, 5, 6, 7, 8, 0)",
+            "",
+            "chosen_heuristic = manhattan_distance",
+            "",
+            "solution_path = a_star(start_state, goal_state, chosen_heuristic)"
+        ],
+        "description": "Sets up the initial state and runs the A* algorithm with the chosen heuristic"
+    },
+    "a_star_8_puzzle_9": {
+        "prefix": "a_star_8_puzzle_9",
+        "body": [
+            "if solution_path:",
+            "    print(\"Solution found!\")",
+            "    print_solution(solution_path)",
+            "else:",
+            "    print(\"No solution found.\")"
+        ],
+        "description": "Prints the solution or indicates no solution found"
+    },
+    "minmax_tic_tac_1": {
+        "prefix": "minmax_tic_tac_1",
+        "body": [
+            "import math",
+            "",
+            "def print_board(board):",
+            "    print(\"-\"*13)",
+            "    for row in [board[i * 3:(i + 1) * 3] for i in range(3)]:",
+            "        print(\"| \" + \" | \".join(row) + \" |\")",
+            "        print(\"-\"*13)",
+            "    print()"
+        ],
+        "description": "Imports the math module and defines the function to print the game board"
+    },
+    "minmax_tic_tac_2": {
+        "prefix": "minmax_tic_tac_2",
+        "body": [
+            "def check_winner(board, player):",
+            "    win_conditions = [(0, 1, 2), (3, 4, 5), (6, 7, 8),",
+            "                      (0, 3, 6), (1, 4, 7), (2, 5, 8),",
+            "                      (0, 4, 8), (2, 4, 6)]",
+            "    for condition in win_conditions:",
+            "        if board[condition[0]] == board[condition[1]] == board[condition[2]] == player:",
+            "            return True",
+            "    return False"
+        ],
+        "description": "Defines function to check if a player has won"
+    },
+    "minmax_tic_tac_3": {
+        "prefix": "minmax_tic_tac_3",
+        "body": [
+            "def is_board_full(board):",
+            "    return all([spot != ' ' for spot in board])",
+            "",
+            "def evaluate(board):",
+            "    if check_winner(board, 'O'):  ",
+            "        return 1",
+            "    elif check_winner(board, 'X'): ",
+            "        return -1",
+            "    else:  ",
+            "        return 0"
+        ],
+        "description": "Defines functions to evaluate the game state and check if the board is full"
+    },
+    "minmax_tic_tac_4": {
+        "prefix": "minmax_tic_tac_4",
+        "body": [
+            "def minimax(board, depth, is_maximizing):",
+            "    score = evaluate(board)",
+            "",
+            "    if score == 1 or score == -1:",
+            "        return score",
+            "    if is_board_full(board):",
+            "        return 0",
+            "",
+            "    if is_maximizing:",
+            "        best_score = -math.inf"
+        ],
+        "description": "Implements the minimax algorithm for the Tic-Tac-Toe game"
+    },
+    "minmax_tic_tac_5": {
+        "prefix": "minmax_tic_tac_5",
+        "body": [
+            "        for i in range(9):",
+            "            if board[i] == ' ':",
+            "                board[i] = 'O'  ",
+            "                best_score = max(best_score, minimax(board, depth + 1, False))",
+            "                board[i] = ' '  ",
+            "        return best_score",
+            "    else:",
+            "        best_score = math.inf"
+        ],
+        "description": "Continues the minimax algorithm for maximizing and minimizing scores"
+    },
+    "minmax_tic_tac_6": {
+        "prefix": "minmax_tic_tac_6",
+        "body": [
+            "        for i in range(9):",
+            "            if board[i] == ' ':",
+            "                board[i] = 'X'  ",
+            "                best_score = min(best_score, minimax(board, depth + 1, True))",
+            "                board[i] = ' '",
+            "        return best_score",
+            "",
+            "def find_best_move(board):",
+            "    best_move = -1",
+            "    best_value = -math.inf"
+        ],
+        "description": "Defines function to find the best move for the computer using minimax"
+    },
+    "minmax_tic_tac_7": {
+        "prefix": "minmax_tic_tac_7",
+        "body": [
+            "    for i in range(9):",
+            "        if board[i] == ' ':",
+            "            board[i] = 'O'  ",
+            "            move_value = minimax(board, 0, False)",
+            "            board[i] = ' ' ",
+            "",
+            "            if move_value > best_value:",
+            "                best_value = move_value",
+            "                best_move = i"
+        ],
+        "description": "Finds the best move for the computer by evaluating possible future moves"
+    },
+    "minmax_tic_tac_8": {
+        "prefix": "minmax_tic_tac_8",
+        "body": [
+            "    return best_move",
+            "",
+            "def play_game():",
+            "    board = [' ' for _ in range(9)] ",
+            "    human = 'X'  ",
+            "    computer = 'O'  ",
+            "",
+            "    print(\"Welcome to Tic-Tac-Toe!\")",
+            "    print(\"You are X and the Computer is O.\")",
+            "    print_board(board)"
+        ],
+        "description": "Defines the main game loop and initializes the board"
+    },
+    "minmax_tic_tac_9": {
+        "prefix": "minmax_tic_tac_9",
+        "body": [
+            "    while True:",
+            "        human_move = int(input(\"Enter your move (1-9): \")) - 1",
+            "        if board[human_move] != ' ':",
+            "            print(\"Invalid move! Try again.\")",
+            "            continue",
+            "",
+            "        board[human_move] = human",
+            "        print(\"Your move:\")",
+            "        print_board(board)",
+            "",
+            "        if check_winner(board, human):",
+            "            print(\"You win!\")",
+            "            break",
+            "        if is_board_full(board):",
+            "            print(\"It's a draw!\")",
+            "            break"
+        ],
+        "description": "Handles the player's moves and checks for win/draw conditions"
+    },
+    "minmax_tic_tac_10": {
+        "prefix": "minmax_tic_tac_10",
+        "body": [
+            "        print(\"Computer's turn...\")",
+            "        computer_move = find_best_move(board)",
+            "        board[computer_move] = computer",
+            "        print_board(board)",
+            "",
+            "        if check_winner(board, computer):",
+            "            print(\"Computer wins!\")",
+            "            break",
+            "        if is_board_full(board):",
+            "            print(\"It's a draw!\")",
+            "            break",
+            "",
+            "play_game()"
+        ],
+        "description": "Processes the computer's turn and checks for win/draw conditions"
+    },
+    "a_star_graph_1": {
+        "prefix": "a_star_graph_1",
+        "body": [
+            "import heapq",
+            "",
+            "def a_star(graph, start, goal, heuristic):",
+            "    pq = []",
+            "    heapq.heappush(pq, (0, start, [], 0))  # (f-score, current_node, path, g-score)",
+            "    visited = set()"
+        ],
+        "description": "Initialize the A* function with priority queue and visited set."
+    },
+    "a_star_graph_2": {
+        "prefix": "a_star_graph_2",
+        "body": [
+            "    while pq:",
+            "        f_score, current_node, path, g = heapq.heappop(pq)",
+            "",
+            "        if current_node in visited:",
+            "            continue"
+        ],
+        "description": "Start the main loop to process the priority queue."
+    },
+    "a_star_graph_3": {
+        "prefix": "a_star_graph_3",
+        "body": [
+            "        path = path + [(current_node, f_score)]",
+            "        if current_node == goal:",
+            "            return path",
+            "",
+            "        visited.add(current_node)"
+        ],
+        "description": "Update the path and check for goal node."
+    },
+    "a_star_graph_4": {
+        "prefix": "a_star_graph_4",
+        "body": [
+            "        for neighbor, cost in graph.get(current_node, []):",
+            "            if neighbor not in visited:",
+            "                new_g = g + cost",
+            "                h = heuristic(neighbor, goal)",
+            "                f_score = new_g + h",
+            "                heapq.heappush(pq, (f_score, neighbor, path, new_g))"
+        ],
+        "description": "Expand neighbors and calculate scores for the priority queue."
+    },
+    "a_star_graph_5": {
+        "prefix": "a_star_graph_5",
+        "body": [
+            "    return None"
+        ],
+        "description": "Return None if no path is found."
+    },
+    "a_star_graph_6": {
+        "prefix": "a_star_graph_6",
+        "body": [
+            "def print_graph_solution(path):",
+            "    if not path:",
+            "        print(\"No path found.\")",
+            "        return",
+            "",
+            "    print(\"Solution Path:\")",
+            "    for node, f_score in path:",
+            "        print(f\"Node: {node}, f-score: {f_score}\")",
+            "    print()"
+        ],
+        "description": "Define the function to print the solution path."
+    },
+    "a_star_graph_7": {
+        "prefix": "a_star_graph_7",
+        "body": [
+            "if __name__ == \"__main__\":",
+            "    graph = {",
+            "        'A': [('B', 1), ('C', 4)],",
+            "        'B': [('A', 1), ('D', 2), ('E', 5)],",
+            "        'C': [('A', 4), ('F', 6)],",
+            "        'D': [('B', 2)],",
+            "        'E': [('B', 5), ('F', 1)],",
+            "        'F': [('C', 6), ('E', 1)]",
+            "    }"
+        ],
+        "description": "Define the main block with the graph structure."
+    },
+    "a_star_graph_8": {
+        "prefix": "a_star_graph_8",
+        "body": [
+            "    start_node = 'B'",
+            "    goal_node = 'F'",
+            "",
+            "    def heuristic(node, goal):",
+            "        heuristic_values = {",
+            "            'A': 7,",
+            "            'B': 6,",
+            "            'C': 2,",
+            "            'D': 5,",
+            "            'E': 1,",
+            "            'F': 0",
+            "        }",
+            "        return heuristic_values.get(node, float('inf'))"
+        ],
+        "description": "Define start and goal nodes along with the heuristic function."
+    },
+    "a_star_graph_9": {
+        "prefix": "a_star_graph_9",
+        "body": [
+            "    solution_path = a_star(graph, start_node, goal_node, heuristic)",
+            "",
+            "    if solution_path:",
+            "        print_graph_solution(solution_path)",
+            "    else:",
+            "        print(\"No solution found.\")"
+        ],
+        "description": "Call the A* function and print the solution path."
+    },
+    "a_star_tsp_1": {
+        "prefix": "a_star_tsp_1",
+        "body": [
+            "import heapq",
+            "",
+            "def a_star_tsp(graph, start):",
+            "",
+            "    def heuristic(remaining_nodes, current_node):",
+            "        if not remaining_nodes:",
+            "            return 0",
+            "        return min(graph[current_node][neighbor] for neighbor in remaining_nodes if neighbor in graph[current_node])"
+        ],
+        "description": "Import heapq and define the A* function with a heuristic function for TSP."
+    },
+    "a_star_tsp_2": {
+        "prefix": "a_star_tsp_2",
+        "body": [
+            "    pq = []",
+            "    heapq.heappush(pq, (0, start, [start], 0))  # (f-score, current_node, path, g-score)",
+            "    best_cost = float('inf')",
+            "    best_path = None",
+            "",
+            "    while pq:"
+        ],
+        "description": "Initialize the priority queue and start the main loop."
+    },
+    "a_star_tsp_3": {
+        "prefix": "a_star_tsp_3",
+        "body": [
+            "        f, current_node, path, g = heapq.heappop(pq)",
+            "",
+            "        if len(path) == len(graph) and start in graph[current_node]:",
+            "            total_cost = g + graph[current_node][start]",
+            "            if total_cost < best_cost:",
+            "                best_cost = total_cost",
+            "                best_path = path + [start]",
+            "            continue"
+        ],
+        "description": "Process nodes and check if the path includes all nodes and can return to the start."
+    },
+    "a_star_tsp_4": {
+        "prefix": "a_star_tsp_4",
+        "body": [
+            "        remaining_nodes = set(graph.keys()) - set(path)",
+            "",
+            "        for neighbor in graph[current_node]:",
+            "            if neighbor not in path:",
+            "                new_g = g + graph[current_node][neighbor]",
+            "                h = heuristic(remaining_nodes, neighbor)",
+            "                f_score = new_g + h",
+            "                heapq.heappush(pq, (f_score, neighbor, path + [neighbor], new_g))"
+        ],
+        "description": "Expand neighbors and calculate the scores for the next state in the priority queue."
+    },
+    "a_star_tsp_5": {
+        "prefix": "a_star_tsp_5",
+        "body": [
+            "    return best_path, best_cost"
+        ],
+        "description": "Return the best path and cost once the search is complete."
+    },
+    "a_star_tsp_6": {
+        "prefix": "a_star_tsp_6",
+        "body": [
+            "def print_tsp_solution(path, cost):",
+            "    if path:",
+            "        print(\"Optimal Path:\", \" -> \".join(path))",
+            "        print(\"Total Cost:\", cost)",
+            "    else:",
+            "        print(\"No solution found.\")"
+        ],
+        "description": "Define the function to print the TSP solution path and total cost."
+    },
+    "a_star_tsp_7": {
+        "prefix": "a_star_tsp_7",
+        "body": [
+            "if __name__ == \"__main__\":",
+            "    graph = {",
+            "        'A': {'B': 10, 'C': 15, 'D': 20},",
+            "        'B': {'A': 10, 'C': 35, 'D': 25},",
+            "        'C': {'A': 15, 'B': 35, 'D': 30},",
+            "        'D': {'A': 20, 'B': 25, 'C': 30}",
+            "    }"
+        ],
+        "description": "Define the graph with distances between nodes."
+    },
+    "a_star_tsp_8": {
+        "prefix": "a_star_tsp_8",
+        "body": [
+            "    start_node = 'A'",
+            "",
+            "    path, cost = a_star_tsp(graph, start_node)",
+            "    print_tsp_solution(path, cost)"
+        ],
+        "description": "Call the A* function for TSP and print the solution."
+    },
+    "dfs_tsp_1": {
+        "prefix": "dfs_tsp_1",
+        "body": [
+            "def tsp_dfs(graph, start):",
+            "    def dfs(current_node, visited, path, cost):",
+            "        nonlocal min_cost, best_path",
+            "",
+            "        if len(visited) == len(graph) and start in graph[current_node]:",
+            "            total_cost = cost + graph[current_node][start]",
+            "            if total_cost < min_cost:",
+            "                min_cost = total_cost",
+            "                best_path = path + [start]",
+            "            return"
+        ],
+        "description": "Define the main TSP function and the DFS helper function."
+    },
+    "dfs_tsp_2": {
+        "prefix": "dfs_tsp_2",
+        "body": [
+            "        for neighbor, edge_cost in graph[current_node].items():",
+            "            if neighbor not in visited:",
+            "                dfs(neighbor, visited | {neighbor}, path + [neighbor], cost + edge_cost)"
+        ],
+        "description": "Expand the DFS function to explore all neighbors recursively."
+    },
+    "dfs_tsp_3": {
+        "prefix": "dfs_tsp_3",
+        "body": [
+            "    min_cost = float('inf')",
+            "    best_path = None",
+            "",
+            "    dfs(start, {start}, [start], 0)",
+            "",
+            "    return best_path, min_cost"
+        ],
+        "description": "Initialize variables and call the DFS helper function, returning the result."
+    },
+    "dfs_tsp_4": {
+        "prefix": "dfs_tsp_4",
+        "body": [
+            "def print_tsp_solution(path, cost):",
+            "    if path:",
+            "        print(\"Optimal Path:\", \" -> \".join(path))",
+            "        print(\"Total Cost:\", cost)",
+            "    else:",
+            "        print(\"No solution found.\")"
+        ],
+        "description": "Define the function to print the TSP solution path and total cost."
+    },
+    "dfs_tsp_5": {
+        "prefix": "dfs_tsp_5",
+        "body": [
+            "if __name__ == \"__main__\":",
+            "    graph = {",
+            "        'A': {'B': 10, 'C': 15, 'D': 20},",
+            "        'B': {'A': 10, 'C': 35, 'D': 25},",
+            "        'C': {'A': 15, 'B': 35, 'D': 30},",
+            "        'D': {'A': 20, 'B': 25, 'C': 30}",
+            "    }"
+        ],
+        "description": "Define the graph with distances between nodes."
+    },
+    "dfs_tsp_6": {
+        "prefix": "dfs_tsp_6",
+        "body": [
+            "    start_node = 'A'",
+            "",
+            "    path, cost = tsp_dfs(graph, start_node)",
+            "    print_tsp_solution(path, cost)"
+        ],
+        "description": "Call the TSP DFS function and print the solution."
+    },
+    "bfs_tsp_1": {
+        "prefix": "bfs_tsp_1",
+        "body": [
+            "from collections import deque",
+            "",
+            "def tsp_bfs(graph, start):",
+            "",
+            "    min_cost = float('inf')",
+            "    best_path = None"
+        ],
+        "description": "Import deque and define the TSP BFS function with initial variables."
+    },
+    "bfs_tsp_2": {
+        "prefix": "bfs_tsp_2",
+        "body": [
+            "    # (current_node, visited_nodes, path, cost)",
+            "    queue = deque([(start, {start}, [start], 0)])",
+            "",
+            "    while queue:",
+            "        current_node, visited, path, cost = queue.popleft()",
+            "",
+            "        if len(visited) == len(graph) and start in graph[current_node]:",
+            "            total_cost = cost + graph[current_node][start]",
+            "            if total_cost < min_cost:",
+            "                min_cost = total_cost",
+            "                best_path = path + [start]",
+            "            continue"
+        ],
+        "description": "Initialize the queue and start the BFS traversal loop."
+    },
+    "bfs_tsp_3": {
+        "prefix": "bfs_tsp_3",
+        "body": [
+            "        for neighbor, edge_cost in graph[current_node].items():",
+            "            if neighbor not in visited:",
+            "                queue.append((neighbor, visited | {neighbor}, path + [neighbor], cost + edge_cost))",
+            "",
+            "    return best_path, min_cost"
+        ],
+        "description": "Explore neighbors and update the BFS queue."
+    },
+    "bfs_tsp_4": {
+        "prefix": "bfs_tsp_4",
+        "body": [
+            "def print_tsp_solution(path, cost):",
+            "",
+            "    if path:",
+            "        print(\"Optimal Path:\", \" -> \".join(path))",
+            "        print(\"Total Cost:\", cost)",
+            "    else:",
+            "        print(\"No solution found.\")"
+        ],
+        "description": "Define the function to print the TSP solution path and total cost."
+    },
+    "bfs_tsp_5": {
+        "prefix": "bfs_tsp_5",
+        "body": [
+            "if __name__ == \"__main__\":",
+            "    graph = {",
+            "        'A': {'B': 10, 'C': 15, 'D': 20},",
+            "        'B': {'A': 10, 'C': 35, 'D': 25},",
+            "        'C': {'A': 15, 'B': 35, 'D': 30},",
+            "        'D': {'A': 20, 'B': 25, 'C': 30}",
+            "    }"
+        ],
+        "description": "Define the graph with distances between nodes."
+    },
+    "bfs_tsp_6": {
+        "prefix": "bfs_tsp_6",
+        "body": [
+            "    start_node = 'A'",
+            "",
+            "    path, cost = tsp_bfs(graph, start_node)",
+            "    print_tsp_solution(path, cost)"
+        ],
+        "description": "Call the TSP BFS function and print the solution."
+    }
+}
